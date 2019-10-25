@@ -1,0 +1,5 @@
+# index:
+#    path: /default
+#    controller: App\Controller\DefaultController::index
+
+
