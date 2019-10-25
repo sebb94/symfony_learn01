@@ -14,21 +14,28 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
-        $users = [
-            "Seba",
-            "Marian",
-            "Włodek"
-        ];
 
-        $entityManager = $this->getDoctrine()->getManager();
+        // Dodawaine userów
+        // $entityManager = $this->getDoctrine()->getManager();
+        // $user = new User;
+        // $user->setName("Seba");
+        // $user2 = new User;
+        // $user2->setName("Marian");
+        // $user3 = new User;
+        // $user3->setName("Włodek");
+        // $entityManager->persist($user);
+        // $entityManager->persist($user2);
+        // $entityManager->persist($user3);
+        // exit($entityManager->flush());
 
-        $user = new User;
-        $user->setName("Seba");
-        $entityManager->persist($user);
-        exit($entityManager->flush());
+        $users = [];
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+
+       
 
         return $this->render('default/index.html.twig', [
-            'controller_name' => 'DefaultController'
+            'controller_name' => 'DefaultController',
+            'users' => $users
         ]);
 
         //    return $this->json(["Name" => "Seba", "x" => 10]);
