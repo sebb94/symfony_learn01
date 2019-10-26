@@ -52,5 +52,37 @@ class DefaultController extends AbstractController
             // return $this->redirectToRoute("default2");
     }
 
+    /**
+     * @Route("/blog/{page?}", name="blog_list", requirements={"page" = "\d+"})
+     */
+    public function index2(){
+        return new Response("BLOG");
+    }
+
+    /**
+     * @Route(
+     *        "/articles/{_locale}/{year}/{slug}/{category}", 
+     *         defaults={"category" : "computers"},
+     *          requirements={
+     *              "_locale" : "pl|en",
+     *              "category": "computers|rtv",
+     *              "year" : "\d+"
+     * })
+     */
+    public function index3(){
+        return new Response("Categories");
+    }
+
+    /**
+     * @Route({
+     *      "pl": "/{_locale?}/o-nas",
+     *       "en": "/{_locale?}/about-us"
+     * }, name="about_us",)
+     */
+    public function index4()
+    {
+        return new Response('Translated routes');
+    }
+    
 
 }
