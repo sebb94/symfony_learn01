@@ -6,15 +6,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\User;
-
+use App\Services\RandomNum;
 class DefaultController extends AbstractController
 {
+      public function __construct(RandomNum $numbers){
+            $numbers->numbers = [100,200,300];
+        }
+
     /**
      * @Route("/default", name="default")
      */
-    public function index()
+    public function index(RandomNum $numbers)
     {
-
+      
         // Dodawaine userów
         // $entityManager = $this->getDoctrine()->getManager();
         // $user = new User;
@@ -31,11 +35,14 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
+        // $numbers = [50, 25, 32];
+        // shuffle($numbers);
        
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'users' => $users
+            'users' => $users,
+            'numbers' => $numbers->numbers
         ]);
 
         //    return $this->json(["Name" => "Seba", "x" => 10]);
