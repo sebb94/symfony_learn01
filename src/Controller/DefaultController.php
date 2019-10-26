@@ -35,18 +35,12 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
        
   
-        //exit($request->cookies->get('PHPSESSID'));
+        // exit($request->query->get('page', 'value if doest exits'));
 
 
-        $session->set('name','123213123');
-         $session->remove('name');
-        if( $session->has('name')){
-            exit($session->get('name'));
-        }else{
-            exit("No session name found");
-        }
-
-       
+        $request->isXmlHttpRequest(); // is it an Ajax request?
+        $request->$request->get('page'); // post data
+        $request->files->get('foo');
       
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
