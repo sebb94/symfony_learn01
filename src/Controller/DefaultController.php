@@ -32,6 +32,16 @@ class DefaultController extends AbstractController
         // $entityManager->persist($user3);
         // exit($entityManager->flush());
 
+
+         $this->addFlash(
+            'notice',
+            'Your changes were saved!'
+        );
+        $this->addFlash(
+            'warning',
+            'Your changes were saved!'
+        );
+
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
@@ -75,8 +85,8 @@ class DefaultController extends AbstractController
 
     /**
      * @Route({
-     *      "pl": "/{_locale?}/o-nas",
-     *       "en": "/{_locale?}/about-us"
+     *      "pl": "/{_locale}/o-nas",
+     *       "en": "/{_locale}/about-us"
      * }, name="about_us",)
      */
     public function index4()
