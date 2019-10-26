@@ -13,7 +13,7 @@ use App\Services\RandomNum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DefaultController extends AbstractController
 {
-      public function __construct(RandomNum $numbers){
+      public function __construct(RandomNum $numbers, $logger){
             $numbers->numbers = [100,200,300];
 
         }
