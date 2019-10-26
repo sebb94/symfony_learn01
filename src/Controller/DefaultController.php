@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Cookie;
 use App\Entity\User;
 use App\Services\RandomNum;
 class DefaultController extends AbstractController
@@ -18,22 +19,8 @@ class DefaultController extends AbstractController
      */
     public function index(RandomNum $numbers)
     {
-      
-        // Dodawaine userów
-        // $entityManager = $this->getDoctrine()->getManager();
-        // $user = new User;
-        // $user->setName("Seba");
-        // $user2 = new User;
-        // $user2->setName("Marian");
-        // $user3 = new User;
-        // $user3->setName("Włodek");
-        // $entityManager->persist($user);
-        // $entityManager->persist($user2);
-        // $entityManager->persist($user3);
-        // exit($entityManager->flush());
 
-
-         $this->addFlash(
+        $this->addFlash(
             'notice',
             'Your changes were saved!'
         );
@@ -44,10 +31,19 @@ class DefaultController extends AbstractController
 
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-
-        // $numbers = [50, 25, 32];
-        // shuffle($numbers);
        
+        $cookie = new Cookie(
+            'my_cookie',
+            'coookieeee',
+            time() + ( 365 * 24 * 60 * 60)
+        );
+
+        $res = new Response();
+        // $res->headers->setCookie( $cookie );
+        // $res->send();
+
+        $res->headers->clearCookie('my_cookie');
+        $res->send();
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
@@ -55,11 +51,6 @@ class DefaultController extends AbstractController
             'numbers' => $numbers->numbers
         ]);
 
-        //    return $this->json(["Name" => "Seba", "x" => 10]);
-
-            // return $this->json(["Name" => $name, "x" => 10]);
-
-            // return $this->redirectToRoute("default2");
     }
 
     /**
