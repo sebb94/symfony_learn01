@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Services\RandomNum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger){
@@ -38,36 +39,66 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/blog/{page?}", name="blog_list", requirements={"page" = "\d+"})
+     * @Route("/generate-url/{param?}", name="generate_url")
      */
-    public function index2(){
-        return new Response("BLOG");
-    }
 
-    /**
-     * @Route(
-     *        "/articles/{_locale}/{year}/{slug}/{category}", 
-     *         defaults={"category" : "computers"},
-     *          requirements={
-     *              "_locale" : "pl|en",
-     *              "category": "computers|rtv",
-     *              "year" : "\d+"
-     * })
-     */
-    public function index3(){
-        return new Response("Categories");
-    }
+    public function generate_url(){
 
-    /**
-     * @Route({
-     *      "pl": "/{_locale}/o-nas",
-     *       "en": "/{_locale}/about-us"
-     * }, name="about_us",)
-     */
-    public function index4()
-    {
-        return new Response('Translated routes');
+           exit($this->generateUrl(
+            'generate_url',
+            array('param' => 20),
+            UrlGeneratorInterface::ABSOLUTE_URL
+
+        )
+    );
     }
+     
+     /**
+     * @Route("/download")
+     */
     
+    public function download(){
+
+        $path = $this->getParameter('download_directory');
+        return $this->file($path.'notes.txt');
+
+    }
+
+       /**
+     * @Route("/redirect-test")
+     */
+    public function redirectTest()
+    {
+        return $this->redirectToRoute('route_to_redirect', array('param' => 10));
+    }
+
+    /**
+     * @Route("/url-to-redirect/{param?}", name="route_to_redirect")
+     */
+    public function methodToRedirect()
+    {
+        exit('Test redirection');
+    }
+
+    /**
+     * @Route("/forwarding-to-controller")
+     */
+    public function forwardingToController()
+    {
+        $response = $this->forward(
+            'App\Controller\DefaultController::methodToForwardTo',
+            array('param'  => '1')
+        );
+        return $response;
+    }
+
+    /**
+     * @Route("/url-to-forward-to/{param?}", name="route_to_forward_to")
+     */
+    public function methodToForwardTo($param)
+    {
+        exit('Test controller forwarding - '.$param);
+    }
+
 
 }
