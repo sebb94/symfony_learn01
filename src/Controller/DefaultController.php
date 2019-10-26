@@ -22,15 +22,7 @@ class DefaultController extends AbstractController
     public function index(RandomNum $numbers, Request $request, SessionInterface $session)
     {
 
-        $this->addFlash(
-            'notice',
-            'Your changes were saved!'
-        );
-        $this->addFlash(
-            'warning',
-            'Your changes were saved!'
-        );
-
+    
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
        
@@ -39,8 +31,8 @@ class DefaultController extends AbstractController
 
 
         $request->isXmlHttpRequest(); // is it an Ajax request?
-        $request->$request->get('page'); // post data
-        $request->files->get('foo');
+        // $request->$request->get('page'); // post data
+        // $request->files->get('foo');
       
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
