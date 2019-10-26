@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Services\RandomNum;
 class DefaultController extends AbstractController
@@ -17,7 +19,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/default", name="default")
      */
-    public function index(RandomNum $numbers)
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session)
     {
 
         $this->addFlash(
@@ -32,19 +34,20 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
        
-        $cookie = new Cookie(
-            'my_cookie',
-            'coookieeee',
-            time() + ( 365 * 24 * 60 * 60)
-        );
+  
+        //exit($request->cookies->get('PHPSESSID'));
 
-        $res = new Response();
-        // $res->headers->setCookie( $cookie );
-        // $res->send();
 
-        $res->headers->clearCookie('my_cookie');
-        $res->send();
+        $session->set('name','123213123');
+         $session->remove('name');
+        if( $session->has('name')){
+            exit($session->get('name'));
+        }else{
+            exit("No session name found");
+        }
 
+       
+      
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'users' => $users,
