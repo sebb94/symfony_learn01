@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Services\RandomNum;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers){
@@ -26,13 +27,10 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
        
-  
-        // exit($request->query->get('page', 'value if doest exits'));
+        if($users){
+            throw $this->createNotFoundException('The users exists!');
+        }
 
-
-        $request->isXmlHttpRequest(); // is it an Ajax request?
-        // $request->$request->get('page'); // post data
-        // $request->files->get('foo');
       
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
