@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["js/custom"],{KomZ:function(o,n){console.log("Custom js")}},[["KomZ","runtime"]]]);
