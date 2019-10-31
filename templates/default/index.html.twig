@@ -9,6 +9,7 @@
 </style>
 
 <div class="example-wrapper">
+   <p> {{ global_variable }} </p>
     <h1>Hello {{ controller_name | upper }}! ✅</h1>
 
     {% set isDisplay = false %}
@@ -64,8 +65,7 @@
     <br>
     {{ asset('images/logo.jpg')}}
     <br>
-
-<img src="{{ asset('images/logo.jpg') }}">
+{# <img src="{{ asset('images/logo.jpg') }}"> #}
 
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">
@@ -83,6 +83,7 @@
 </div>
 
 {% set str = "some string \n from \n database" %}
+
 
 {% endblock %}
 
