@@ -9,7 +9,18 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>Hello {{ controller_name | upper }}! ✅</h1>
+
+    {% set isDisplay = false %}
+    {% set foo  %}
+        <h3> Display true </h3>
+    {% endset %}
+
+    {% if isDisplay %}
+
+        {{ foo }}
+
+     {% endif %}   
 
     This friendly message is coming from:
     <ul>
@@ -24,6 +35,28 @@
  
     {% endfor %}
     </ul>
+
+    {% set subs = [{name : "Sebaaa"}, {name: "Włodek"}, {name: "Marian"}] %}
+
+    {% for sub in subs if sub.name == "Seba" %}
+
+    <p>{{sub.name}}</p>
+
+    {% else %}
+    <p> No Seba Found </p>
+
+    {% endfor %}  
+
+    {{ include('includes/subview.html.twig', {'subs' : subs}) }}
+
+
+    {% for i in 1..10  %}
+
+        <div class="{{ cycle(['even','odd'], i)}}">
+        {{i}}
+        </div>
+
+    {% endfor %}
 
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">
@@ -45,8 +78,8 @@
 {% endblock %}
 
 {% block javascripts %}
+{{ parent() }}
   <script>
-let a = "AA";
-alert(a);
+alert(2);
   </script>
 {% endblock %}
