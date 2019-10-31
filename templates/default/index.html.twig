@@ -67,6 +67,10 @@
     <br>
 {# <img src="{{ asset('images/logo.jpg') }}"> #}
 
+{{app.request.get('param')}}<br>
+{{app.environment }}<br>
+{{ dump(app.session) }}
+
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">
         {{ message }}
