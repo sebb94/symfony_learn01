@@ -58,6 +58,15 @@
 
     {% endfor %}
 
+    {{ path('home')}}
+    <br>
+    {{ url('home')}}
+    <br>
+    {{ asset('images/logo.jpg')}}
+    <br>
+
+<img src="{{ asset('images/logo.jpg') }}">
+
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">
         {{ message }}
@@ -73,13 +82,15 @@
 {% endfor %}
 </div>
 
-
+{% set str = "some string \n from \n database" %}
 
 {% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
   <script>
-alert(2);
+console.log(2);
+{# var str = "{{ str|escape('js') }}";
+console.log(str); #}
   </script>
 {% endblock %}

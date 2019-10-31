@@ -20,7 +20,7 @@ class DefaultController extends AbstractController
         }
 
     /**
-     * @Route("/page", name="default")
+     * @Route("/home", name="home")
      */
     public function index(RandomNum $numbers, Request $request, SessionInterface $session)
     {
