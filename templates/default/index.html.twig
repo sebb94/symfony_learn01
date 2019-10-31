@@ -51,7 +51,7 @@
     {{ include('includes/subview.html.twig', {'subs' : subs}) }}
 
 
-    {% for i in 1..10  %}
+    {# {% for i in 1..10  %}
 
         <div class="{{ cycle(['even','odd'], i)}}">
         {{i}}
@@ -64,12 +64,17 @@
     {{ url('home')}}
     <br>
     {{ asset('images/logo.jpg')}}
-    <br>
+    <br> #}
 {# <img src="{{ asset('images/logo.jpg') }}"> #}
-
+{# 
 {{app.request.get('param')}}<br>
-{{app.environment }}<br>
-{{ dump(app.session) }}
+{{app.environment }}<br> #}
+
+{{render(controller(
+'App\\Controller\\DefaultController::popularPosts',
+{ 'number': 3}
+))}}
+
 
 {% for message in app.flashes('notice') %}
     <div class="flash-notice">

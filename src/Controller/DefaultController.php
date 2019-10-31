@@ -38,6 +38,16 @@ class DefaultController extends AbstractController
 
     }
 
+    public function popularPosts($number = 3){
+
+        // database call
+        $posts = ['post 1', 'post 2', 'post 3'];
+
+        return $this->render(('default/most_popular.html.twig'), [
+            'posts' => $posts
+        ]);
+    }
+
     /**
      * @Route("/generate-url/{param?}", name="generate_url")
      */
