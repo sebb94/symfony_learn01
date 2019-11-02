@@ -31,11 +31,15 @@ class DefaultController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
 
         $entityManager = $this->getDoctrine()->getManager();
-        $id = 5;
-        $user = $entityManager->getRepository(User::class)->find($id);
-        $entityManager->remove($user);
-        $entityManager->flush();
-      
+
+        $conn = $entityManager->getConnection();
+        $sql = 'SELECT * FROM user as u WHERE u.id > :id';
+
+        $stmt = $conn->prepare($sql);
+        $stmt->execute(['id' => 1]);
+
+       print_r($stmt->fetchAll());
+
 
 
         return $this->render('default/index.html.twig', [
