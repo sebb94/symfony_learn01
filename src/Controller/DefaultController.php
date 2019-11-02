@@ -28,8 +28,21 @@ class DefaultController extends AbstractController
     
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $repository = $this->getDoctrine()->getRepository(User::class);
 
+        $user3 = $repository->find(3);
+        
+
+        $userss = $repository->findBy(['name' => 'Seba'], ['id' => 'DESC']);
+     
+            foreach ($userss as $userr){
+                echo $userr->getName()  . ' ' .$userr->getId() . '<br>';
+        }
       
+        $marian = $repository->findOneBy(['name' => 'Marian', 'id' => '3']);
+        print_r($marian);
+        echo $marian->getId() . ' to id Mariana';
+
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'users' => $users,
