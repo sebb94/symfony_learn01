@@ -31,18 +31,11 @@ class DefaultController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(User::class);
 
         $entityManager = $this->getDoctrine()->getManager();
-
-        $id = 10;
+        $id = 5;
         $user = $entityManager->getRepository(User::class)->find($id);
-        
-        if(!$user){
-            throw $this->createNotFoundException(
-                'No user found for id ' . $id
-            );
-        }
-        $user->setName('New user name');
+        $entityManager->remove($user);
         $entityManager->flush();
-        exit(print_r($user));
+      
 
 
         return $this->render('default/index.html.twig', [
