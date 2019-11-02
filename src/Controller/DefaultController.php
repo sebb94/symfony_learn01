@@ -30,18 +30,20 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $repository = $this->getDoctrine()->getRepository(User::class);
 
-        $user3 = $repository->find(3);
-        
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $userss = $repository->findBy(['name' => 'Seba'], ['id' => 'DESC']);
-     
-            foreach ($userss as $userr){
-                echo $userr->getName()  . ' ' .$userr->getId() . '<br>';
+        $id = 10;
+        $user = $entityManager->getRepository(User::class)->find($id);
+        
+        if(!$user){
+            throw $this->createNotFoundException(
+                'No user found for id ' . $id
+            );
         }
-      
-        $marian = $repository->findOneBy(['name' => 'Marian', 'id' => '3']);
-        print_r($marian);
-        echo $marian->getId() . ' to id Mariana';
+        $user->setName('New user name');
+        $entityManager->flush();
+        exit(print_r($user));
+
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
