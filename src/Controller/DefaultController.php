@@ -15,26 +15,24 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger){
-            $numbers->numbers = [100,200,300,400,500];
+            $numbers->numbers = [100,200,300,400,500,111,123,13,413,123];
 
         }
 
     /**
-     * @Route("/home/{id}", name="home")
+     * @Route("/home", name="home")
      */
-    public function index(RandomNum $numbers, Request $request, SessionInterface $session, User $user)
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session)
     {
-          print_r($user); 
-    
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
       //  $repository = $this->getDoctrine()->getRepository(User::class);
+       $entityManager = $this->getDoctrine()->getManager();
 
-       // $entityManager = $this->getDoctrine()->getManager();
-
-      
-
-
+       $user = new User();
+       $user->setName('Sebaaa');
+       $entityManager->persist($user);
+       $entityManager->flush(); 
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
