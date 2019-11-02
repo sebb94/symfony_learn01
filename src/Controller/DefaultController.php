@@ -20,25 +20,19 @@ class DefaultController extends AbstractController
         }
 
     /**
-     * @Route("/home", name="home")
+     * @Route("/home/{id}", name="home")
      */
-    public function index(RandomNum $numbers, Request $request, SessionInterface $session)
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session, User $user)
     {
-
+          print_r($user); 
     
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-        $repository = $this->getDoctrine()->getRepository(User::class);
+      //  $repository = $this->getDoctrine()->getRepository(User::class);
 
-        $entityManager = $this->getDoctrine()->getManager();
+       // $entityManager = $this->getDoctrine()->getManager();
 
-        $conn = $entityManager->getConnection();
-        $sql = 'SELECT * FROM user as u WHERE u.id > :id';
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute(['id' => 1]);
-
-       print_r($stmt->fetchAll());
+      
 
 
 
