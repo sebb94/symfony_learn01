@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Entity\Video;
 use App\Entity\Address;
+use App\Entity\Author;
+use App\Entity\File;
+use App\Entity\Pdf;
+use App\Entity\Image;
 use App\Services\RandomNum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -29,13 +33,19 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
-      //  $repository = $this->getDoctrine()->getRepository(User::class);
-       $entityManager = $this->getDoctrine()->getManager(); 
+    //    $entityManager = $this->getDoctrine()->getManager(); 
+    //    $items = $entityManager->getRepository(File::class)->findAll();
+    //    dump($items);
+         $author = $this->getDoctrine()->getRepository(Author::class)->find(1);
 
-    
-       $user1 = $this->getDoctrine()->getRepository(User::class)->find(1);  
-       dump($user1);
-    
+         dump($author);
+
+         foreach($author->getFiles() as $file){
+
+            // if($file instanceof Pdf){
+                dump($file->getFileName());
+            // }
+         }
 
 
         return $this->render('default/index.html.twig', [
