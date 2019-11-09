@@ -14,11 +14,11 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
 
 
-        for($i=1; $i<=5; $i++){
-            $user = new User();
-            $user->setName('Name - ' . $i);
-            $manager->persist($user);
-        }
-        $manager->flush();
+        // for($i=1; $i<=5; $i++){
+        //     $user = new User();
+        //     $user->setName('Name - ' . $i);
+        //     $manager->persist($user);
+        // }
+        // $manager->flush();
     }
 }

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
+use App\Entity\Video;
 use App\Services\RandomNum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -26,13 +27,32 @@ class DefaultController extends AbstractController
     {
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-      //  $repository = $this->getDoctrine()->getRepository(User::class);
-       $entityManager = $this->getDoctrine()->getManager();
 
-       $user = new User();
-       $user->setName('Sebaaa');
-       $entityManager->persist($user);
-       $entityManager->flush(); 
+      //  $repository = $this->getDoctrine()->getRepository(User::class);
+       $entityManager = $this->getDoctrine()->getManager(); 
+
+        // $user = new User();
+        // $user->setName('seba');
+
+        // for($i = 1; $i<=3; $i++){
+        //     $video = new Video();
+        //     $video->setTitle('Video title ' . $i);
+        //     $user->addVideo($video);
+        //     $entityManager->persist($video);
+        // } 
+
+        //  $entityManager->persist($user);
+        //  $entityManager->flush();
+
+        $video = $this->getDoctrine()->getRepository(Video::class)->find(1);
+        //  dump(($video->getUser()->getName()));
+      
+        $user = $this->getDoctrine()->getRepository(User::class)->find(1);  
+        
+        foreach( $user->getVideos() as $video){
+            dump($video->getTitle());
+        }
+
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
