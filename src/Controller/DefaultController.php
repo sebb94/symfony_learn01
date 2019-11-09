@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\User;
 use App\Entity\Video;
+use App\Entity\Address;
 use App\Services\RandomNum;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -33,13 +34,14 @@ class DefaultController extends AbstractController
 
     
         $user = $this->getDoctrine()->getRepository(User::class)->find(1);  
-        $video = $this->getDoctrine()->getRepository(Video::class)->find(1);   
-        $user->removeVideo($video);
+      
+        $address = new Address();
+        $address->setStreet('Dembowa');
+        $address->setNumber(4);
+        $user->setAddress($address);
+        //$entityManager->persist($address); required if 'cascade: persist' is not set
+        $entityManager->persist($user);
         $entityManager->flush();
-        
-        foreach( $user->getVideos() as $video){
-            dump($video->getTitle());
-        }
 
 
         return $this->render('default/index.html.twig', [
