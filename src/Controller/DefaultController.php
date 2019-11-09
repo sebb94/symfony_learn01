@@ -33,16 +33,27 @@ class DefaultController extends AbstractController
        $entityManager = $this->getDoctrine()->getManager(); 
 
     
-        $user = $this->getDoctrine()->getRepository(User::class)->find(1);  
-      
-        $address = new Address();
-        $address->setStreet('Dembowa');
-        $address->setNumber(4);
-        $user->setAddress($address);
-        //$entityManager->persist($address); required if 'cascade: persist' is not set
-        $entityManager->persist($user);
-        $entityManager->flush();
+        $user1 = $this->getDoctrine()->getRepository(User::class)->find(1);  
+        $user2 = $this->getDoctrine()->getRepository(User::class)->find(2); 
+        $user3 = $this->getDoctrine()->getRepository(User::class)->find(3); 
+        $user4 = $this->getDoctrine()->getRepository(User::class)->find(4); 
 
+        // $user1->addFollowed($user2);
+        // $user1->addFollowed($user3);
+        // $user1->addFollowed($user4);
+        // $entityManager->flush();
+        // for ($i = 1; $i <= 4; $i++){
+        //     $user = new User();
+        //     $user->setName('Seba - ' . $i);
+        //     $entityManager->persist($user);
+        // }
+        // $entityManager->flush();
+
+        print_r($user1->getFollowed()->count());
+        echo "<br>";
+        print_r($user1->getFollowing()->count());
+        echo "<br>";
+        print_r($user4->getFollowing()->count());    
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
