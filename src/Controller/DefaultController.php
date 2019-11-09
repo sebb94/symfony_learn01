@@ -31,23 +31,11 @@ class DefaultController extends AbstractController
       //  $repository = $this->getDoctrine()->getRepository(User::class);
        $entityManager = $this->getDoctrine()->getManager(); 
 
-        // $user = new User();
-        // $user->setName('seba');
-
-        // for($i = 1; $i<=3; $i++){
-        //     $video = new Video();
-        //     $video->setTitle('Video title ' . $i);
-        //     $user->addVideo($video);
-        //     $entityManager->persist($video);
-        // } 
-
-        //  $entityManager->persist($user);
-        //  $entityManager->flush();
-
-        $video = $this->getDoctrine()->getRepository(Video::class)->find(1);
-        //  dump(($video->getUser()->getName()));
-      
+    
         $user = $this->getDoctrine()->getRepository(User::class)->find(1);  
+        $video = $this->getDoctrine()->getRepository(Video::class)->find(1);   
+        $user->removeVideo($video);
+        $entityManager->flush();
         
         foreach( $user->getVideos() as $video){
             dump($video->getTitle());
