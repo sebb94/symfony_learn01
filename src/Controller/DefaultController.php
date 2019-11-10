@@ -31,10 +31,9 @@ class DefaultController extends AbstractController
      */
     public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service )
     {
-        $service->someAction();
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-
+        $service->secService->someMethod();
         $entityManager = $this->getDoctrine()->getManager(); 
        
 

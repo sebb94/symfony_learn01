@@ -4,16 +4,10 @@ namespace App\Services;
 use App\Services\MySecondService;
 class MyService{
     
-    public $logger;
-    public $my;
-    
-    public function __construct(){
-
+    public function __construct($service){
+        dump($service);
+        $this->secService = $service;
     }
-    public function someAction(){
-        dump($this->logger);
-        dump($this->my);
-     }
 
 }    
 
