@@ -35,9 +35,7 @@ services:
             $logger: '@monolog.logger.doctrine'
 
 
-    App\Services\MyService: 
-        tags: 
-            - {name: doctrine.event_listener, event: postFlush}
-            - {name: kernel.cache_clearer }
+    App\Services\ServiceInterface: '@App\Services\MyService' 
+    
 
             

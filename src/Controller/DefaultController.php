@@ -16,7 +16,7 @@ use App\Entity\File;
 use App\Entity\Pdf;
 use App\Entity\Image;
 use App\Services\RandomNum;
-use App\Services\MyService;
+use App\Services\ServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,7 +30,7 @@ class DefaultController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service, ContainerInterface $container)
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session, ServiceInterface $service, ContainerInterface $container)
     {
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();

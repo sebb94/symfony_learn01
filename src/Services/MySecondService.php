@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-class MySecondService{
+class MySecondService implements ServiceInterface{
 
     public function __construct(){
-        dump("im from My 2nd Service");
+        dump("hello from My 2nd Service");
     }
 
 
