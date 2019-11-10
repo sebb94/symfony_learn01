@@ -280,6 +280,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
     },
+    "symfony/proxy-manager-bridge": {
+        "version": "v4.3.6"
+    },
     "symfony/requirements-checker": {
         "version": "1.0",
         "recipe": {
