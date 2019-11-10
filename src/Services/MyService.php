@@ -4,9 +4,11 @@ namespace App\Services;
 use App\Services\MySecondService;
 class MyService{
     
-    public function __construct($service){
-        dump($service);
-        $this->secService = $service;
+    public function __construct($one){
+
+        dump("Hello from MyService!");
+        dump($one);
+
     }
 
 }    

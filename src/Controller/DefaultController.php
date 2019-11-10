@@ -19,6 +19,7 @@ use App\Services\RandomNum;
 use App\Services\MyService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger){
@@ -29,13 +30,13 @@ class DefaultController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service )
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service, ContainerInterface $container)
     {
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
-        $service->secService->someMethod();
         $entityManager = $this->getDoctrine()->getManager(); 
        
+        dump($container->get('app.myservice'));
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
