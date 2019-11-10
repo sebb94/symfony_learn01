@@ -16,6 +16,7 @@ use App\Entity\File;
 use App\Entity\Pdf;
 use App\Entity\Image;
 use App\Services\RandomNum;
+use App\Services\MyService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class DefaultController extends AbstractController
@@ -28,24 +29,12 @@ class DefaultController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(RandomNum $numbers, Request $request, SessionInterface $session)
+    public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service )
     {
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
-    //    $entityManager = $this->getDoctrine()->getManager(); 
-    //    $items = $entityManager->getRepository(File::class)->findAll();
-    //    dump($items);
-         $author = $this->getDoctrine()->getRepository(Author::class)->find(1);
-
-         dump($author);
-
-         foreach($author->getFiles() as $file){
-
-            // if($file instanceof Pdf){
-                dump($file->getFileName());
-            // }
-         }
+        $entityManager = $this->getDoctrine()->getManager(); 
 
 
         return $this->render('default/index.html.twig', [
