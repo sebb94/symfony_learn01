@@ -35,5 +35,7 @@ services:
             $logger: '@monolog.logger.doctrine'
 
     App\Services\MyService:
-        arguments:
-            $second_service: '@App\Services\MySecondService'
+        autowire: false 
+   
+           
+            
