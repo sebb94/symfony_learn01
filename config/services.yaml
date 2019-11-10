@@ -36,5 +36,4 @@ services:
 
     App\Services\MyService:
         arguments:
-            $param: 'some parameter'
-            $adminEmail: '%adminEmail%'
+            $second_service: '@App\Services\MySecondService'
