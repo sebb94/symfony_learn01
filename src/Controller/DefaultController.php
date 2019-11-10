@@ -31,11 +31,12 @@ class DefaultController extends AbstractController
      */
     public function index(RandomNum $numbers, Request $request, SessionInterface $session, MyService $service )
     {
+        $service->someAction();
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         $entityManager = $this->getDoctrine()->getManager(); 
-        $service->someAction();
+       
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
