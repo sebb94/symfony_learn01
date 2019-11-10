@@ -35,7 +35,7 @@ services:
             $logger: '@monolog.logger.doctrine'
 
     App\Services\MyService:
-        autowire: false 
+        autowire: true
    
            
             

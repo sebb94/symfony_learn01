@@ -35,7 +35,7 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         $entityManager = $this->getDoctrine()->getManager(); 
-
+        $service->someAction();
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
