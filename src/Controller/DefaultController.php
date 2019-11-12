@@ -48,7 +48,7 @@ class DefaultController extends AbstractController
             $posts->expiresAfter(10);
             $cache->save($posts);
         }
-        // $cache->deleteItem('database.get_posts');
+        $cache->deleteItem('database.get_posts');
         $cache->clear();
         dump(unserialize($posts->get()));
 
