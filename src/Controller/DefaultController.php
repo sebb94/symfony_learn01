@@ -21,6 +21,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger){
@@ -38,19 +39,53 @@ class DefaultController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager(); 
        
 
-        $cache = new FilesystemAdapter();
-        $posts = $cache->getItem('database.get_posts');
+        $cache = new TagAwareAdapter(
+            new FilesystemAdapter()
+        );
 
-        if( !$posts->isHit() ){
-            $posts_from_db = ['post1','post2','post3'];
-            dump('connected to db...');
-            $posts->set(serialize($posts_from_db));
-            $posts->expiresAfter(10);
-            $cache->save($posts);
+
+        $acer = $cache->getItem('acer');
+        $dell = $cache->getItem('dell');
+        $ibm = $cache->getItem('ibm');
+        $apple = $cache->getItem('apple');
+
+        if( !$acer->isHit() ){
+            $acer_from_db = 'acer laptop';
+            $acer->set($acer_from_db);
+            $acer->tag(['computers,laptops,acer']);
+            $cache->save($acer);
+            dump('acer laptop from DB...');
         }
-        $cache->deleteItem('database.get_posts');
-        $cache->clear();
-        dump(unserialize($posts->get()));
+        if( !$dell->isHit() ){
+            $dell_from_db = 'dell laptop';
+            $dell->set($dell_from_db);
+            $dell->tag(['computers,laptops,dell']);
+            $cache->save($dell);
+            dump('dell laptop from DB...');
+        }
+        if( !$ibm->isHit() ){
+            $ibm_from_db = 'ibm desktop';
+            $ibm->set($ibm_from_db);
+            $ibm->tag(['computers,desktop,ibm']);
+            $cache->save($ibm);
+            dump('ibm desktop from DB...');
+        }
+        if( !$apple->isHit() ){
+            $apple_from_db = 'apple desktop';
+            $apple->set($apple_from_db);
+            $apple->tag(['computers,desktop,apple']);
+            $cache->save($apple);
+            dump('apple desktop from DB...');
+        }
+
+        $cache->invalidateTags(['ibm']);
+        $cache->invalidateTags(['laptops']);
+        $cache->invalidateTags(['computers']);
+        dump($acer->get());
+        dump($dell->get());
+        dump($ibm->get());
+        dump($apple->get());  
+         
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
