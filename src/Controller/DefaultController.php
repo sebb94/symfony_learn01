@@ -20,6 +20,7 @@ use App\Services\ServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger){
@@ -36,12 +37,20 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager(); 
        
-         $user = $this->getDoctrine()->getRepository(User::class)->find(1);
-         $user->setName('Marian');
-         $entityManager->persist($user);
-         $entityManager->flush();
-        
-        
+
+        $cache = new FilesystemAdapter();
+        $posts = $cache->getItem('database.get_posts');
+
+        if( !$posts->isHit() ){
+            $posts_from_db = ['post1','post2','post3'];
+            dump('connected to db...');
+            $posts->set(serialize($posts_from_db));
+            $posts->expiresAfter(10);
+            $cache->save($posts);
+        }
+        // $cache->deleteItem('database.get_posts');
+        $cache->clear();
+        dump(unserialize($posts->get()));
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',

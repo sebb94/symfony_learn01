@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f8d453099bc529f76cf86a5f74e551bc",
+    "content-hash": "df74a3bde536f2bc629de993b4fbaa6f",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1808,16 +1808,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v4.3.5",
+            "version": "v4.3.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "40c62600ebad1ed2defbf7d35523d918a73ab330"
+                "reference": "30a51b2401ee15bfc7ea98bd7af0f9d80e26e649"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/40c62600ebad1ed2defbf7d35523d918a73ab330",
-                "reference": "40c62600ebad1ed2defbf7d35523d918a73ab330",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/30a51b2401ee15bfc7ea98bd7af0f9d80e26e649",
+                "reference": "30a51b2401ee15bfc7ea98bd7af0f9d80e26e649",
                 "shasum": ""
             },
             "require": {
@@ -1882,7 +1882,7 @@
                 "caching",
                 "psr6"
             ],
-            "time": "2019-10-04T10:57:53+00:00"
+            "time": "2019-10-30T12:58:49+00:00"
         },
         {
             "name": "symfony/cache-contracts",
