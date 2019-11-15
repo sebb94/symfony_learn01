@@ -38,10 +38,10 @@ services:
     App\Services\ServiceInterface: '@App\Services\MyService' 
 
 
-    App\Listeners\VideoCreatedListener: 
-        tags:
-            - {name: kernel.event_listener, event: video.created.event,
-               method: onVidCreatedEvent}
+    # App\Listeners\VideoCreatedListener: 
+    #     tags:
+    #         - {name: kernel.event_listener, event: video.created.event,
+    #            method: onVidCreatedEvent}
     
 
             
