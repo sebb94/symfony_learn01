@@ -22,11 +22,13 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
+use App\Events\VideoCreatedEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 class DefaultController extends AbstractController
 {
-      public function __construct(RandomNum $numbers, $logger){
+      public function __construct(RandomNum $numbers, $logger, EventDispatcherInterface $dispatcher){
             $numbers->numbers = [100,200,300,400,500,111,123,13,413,123];
-
+            $this->dispatcher = $dispatcher;
         }
 
     /**
@@ -38,54 +40,12 @@ class DefaultController extends AbstractController
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager(); 
        
+        $video = new \stdClass();
+        $video->title = 'Funny movie';
+        $video->category = 'funny';
 
-        $cache = new TagAwareAdapter(
-            new FilesystemAdapter()
-        );
-
-
-        $acer = $cache->getItem('acer');
-        $dell = $cache->getItem('dell');
-        $ibm = $cache->getItem('ibm');
-        $apple = $cache->getItem('apple');
-
-        if( !$acer->isHit() ){
-            $acer_from_db = 'acer laptop';
-            $acer->set($acer_from_db);
-            $acer->tag(['computers,laptops,acer']);
-            $cache->save($acer);
-            dump('acer laptop from DB...');
-        }
-        if( !$dell->isHit() ){
-            $dell_from_db = 'dell laptop';
-            $dell->set($dell_from_db);
-            $dell->tag(['computers,laptops,dell']);
-            $cache->save($dell);
-            dump('dell laptop from DB...');
-        }
-        if( !$ibm->isHit() ){
-            $ibm_from_db = 'ibm desktop';
-            $ibm->set($ibm_from_db);
-            $ibm->tag(['computers,desktop,ibm']);
-            $cache->save($ibm);
-            dump('ibm desktop from DB...');
-        }
-        if( !$apple->isHit() ){
-            $apple_from_db = 'apple desktop';
-            $apple->set($apple_from_db);
-            $apple->tag(['computers,desktop,apple']);
-            $cache->save($apple);
-            dump('apple desktop from DB...');
-        }
-
-        $cache->invalidateTags(['ibm']);
-        $cache->invalidateTags(['laptops']);
-        $cache->invalidateTags(['computers']);
-        dump($acer->get());
-        dump($dell->get());
-        dump($ibm->get());
-        dump($apple->get());  
-         
+        $event = new VideoCreatedEvent($video);
+        $this->dispatcher->dispatch('video.created.event', $event);
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
