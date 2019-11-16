@@ -43,7 +43,6 @@ class DefaultController extends AbstractController
         $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
         dump($videos);
         $video = new Video();
-        $video->setTitle('Write a blog post');
 
         $form = $this->createForm(VideoFormType::class, $video);
         $form->handleRequest($request);

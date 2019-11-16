@@ -1,9 +1,12 @@
 <?php
 
 namespace App\Entity;
-
+/*
+     * @Assert\NotBlank()
+     * @Assert\Email(message = "The email '{{ value }}' is not valid email")
+*/
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\VideoRepository")
  */
@@ -16,9 +19,12 @@ class Video
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+   /**
+    * @ORM\Column(type="string", length=255)
+    * @Assert\NotBlank()
+    * @Assert\Lenght(min = 2, max = 10, minMessage = "Video title must be at least {{ limit }} characters long", maxMessage = "Video title cannot be more than {{ limit }} charakters")
+    */
+
     private $title;
 
     /**
@@ -29,6 +35,8 @@ class Video
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     * @Assert\Type("\DateTime")
      */
     private $created_at;
 
