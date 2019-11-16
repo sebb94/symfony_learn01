@@ -40,7 +40,8 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager(); 
-
+        $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+        dump($videos);
         $video = new Video();
         $video->setTitle('Write a blog post');
 
@@ -48,8 +49,9 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
-                dump($form->getData());
-                // return $this->redirectToRoute('home');
+                $entityManager->persist($video);
+                $entityManager->flush();
+                 return $this->redirectToRoute('home');
             }
         $readyForm = $form->createView();
 
