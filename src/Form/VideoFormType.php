@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 class VideoFormType extends AbstractType
@@ -22,7 +23,11 @@ class VideoFormType extends AbstractType
             ])
             ->add('save',SubmitType::class, [
                 'label' => 'ADD Video'
-            ])    
+            ])
+            ->add('agreeTerms', CheckboxType::class, [
+                'label' => 'Agree',
+                'mapped' => false
+            ])  
         ;
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){

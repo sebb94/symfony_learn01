@@ -40,11 +40,10 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager(); 
-        //  $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
-        //  dump($videos);
-        //  $video = new Video(); 
-
-        $video = $entityManager->getRepository(Video::class)->find(1);
+         $videos = $this->getDoctrine()->getRepository(Video::class)->findAll();
+         dump($videos);
+         $video = new Video(); 
+        // $video = $entityManager->getRepository(Video::class)->find(1);
         $form = $this->createForm(VideoFormType::class, $video);
         $form->handleRequest($request);
 
