@@ -24,6 +24,7 @@ use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Symfony\Component\Cache\Adapter\TagAwareAdapter;
 use App\Events\VideoCreatedEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use App\Form\VideoFormType;
 class DefaultController extends AbstractController
 {
       public function __construct(RandomNum $numbers, $logger, EventDispatcherInterface $dispatcher){
@@ -39,18 +40,24 @@ class DefaultController extends AbstractController
         $users = [];
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
         $entityManager = $this->getDoctrine()->getManager(); 
-       
-        $video = new \stdClass();
-        $video->title = 'Funny movie';
-        $video->category = 'funny';
 
-        $event = new VideoCreatedEvent($video);
-        $this->dispatcher->dispatch('video.created.event', $event);
+        $video = new Video();
+        $video->setTitle('Write a blog post');
+
+        $form = $this->createForm(VideoFormType::class, $video);
+        $form->handleRequest($request);
+
+            if($form->isSubmitted() && $form->isValid()){
+                dump($form->getData());
+                // return $this->redirectToRoute('home');
+            }
+        $readyForm = $form->createView();
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
             'users' => $users,
-            'numbers' => $numbers->numbers
+            'numbers' => $numbers->numbers,
+            'form'  => $readyForm
         ]);
 
     }
