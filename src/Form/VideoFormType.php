@@ -9,6 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 class VideoFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -16,18 +18,28 @@ class VideoFormType extends AbstractType
         $builder
             ->add('title', TextType::class,[
                 'label' => 'set video title',
-                'data' => 'example data',
                 'required' => false
-            ])
-            ->add('created_at', DateType::class, [
-                'label' => 'Set Date',
-                'widget' => 'single_text',
-
             ])
             ->add('save',SubmitType::class, [
                 'label' => 'ADD Video'
             ])    
         ;
+
+        $builder->addEventListener(FormEvents::PRE_SET_DATA,function(FormEvent $event){
+
+            $video = $event->getData();
+            $form = $event->getForm();
+
+            if( !$video || null === $video->getId()){
+
+                $form->add('created_at', DateType::class, [
+                    'label' => 'Set date',
+                    'widget' => 'single_text'
+                ]);
+            }
+
+        });
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
