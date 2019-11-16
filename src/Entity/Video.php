@@ -36,6 +36,16 @@ class Video
      */
     private $created_at;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\File(
+     * maxSize="4096k",
+     * mimeTypes = {"application/pdf", "video/mp4", "audio/mpeg", "application/x-pdf"},
+     * mimeTypesMessage = "Please upload a valid file"
+     * )
+     */
+    private $file;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -73,6 +83,18 @@ class Video
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getFile(): ?string
+    {
+        return $this->file;
+    }
+
+    public function setFile(string $file): self
+    {
+        $this->file = $file;
 
         return $this;
     }

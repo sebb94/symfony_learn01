@@ -6,6 +6,7 @@
 parameters:
     download_directory: '../public/'
     adminEmail: 'admin@admin.com'
+    file_directory: '%kernel.project_dir%/public/upload/files'
 
 services:
     # default configuration for services in *this* file

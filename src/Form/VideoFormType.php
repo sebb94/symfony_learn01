@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 class VideoFormType extends AbstractType
@@ -22,11 +23,18 @@ class VideoFormType extends AbstractType
                 'required' => false
             ])
             ->add('save',SubmitType::class, [
-                'label' => 'ADD Video'
+                'label' => 'ADD Video',
+                'attr' => [
+                    'class' => 'my-3 btn btn-primary btn-lg'    
+                ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'label' => 'Agree',
                 'mapped' => false
+            ])  
+            ->add('file', FileType::class, [
+                'label' => 'Upload file',
+                'help' => 'upload file here'
             ])  
         ;
 

@@ -48,6 +48,13 @@ class DefaultController extends AbstractController
         $form->handleRequest($request);
 
             if($form->isSubmitted() && $form->isValid()){
+                $file = $form->get('file')->getData();
+                $fileName = sha1(random_bytes(14). '.' . $file->guessExtension());
+                $file->move(
+                    $this->getParameter('file_directory'),
+                    $fileName
+                );
+                $video->setFile($fileName);
                 $entityManager->persist($video);
                 $entityManager->flush();
                  return $this->redirectToRoute('home');
